@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Личный кабинет финансов</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="app__header">
+      <div>
+        <h1>Личный кабинет</h1>
+        <p>Учитывай доходы и траты за месяц в одном месте</p>
+      </div>
+      <button id="clearDataBtn" class="btn btn--danger" type="button">Очистить все данные</button>
+    </header>
+
+    <section class="cards" aria-label="Сводка по месяцу">
+      <article class="card card--income">
+        <h2>Доходы</h2>
+        <p id="incomeTotal">0 ₽</p>
+      </article>
+      <article class="card card--expense">
+        <h2>Траты</h2>
+        <p id="expenseTotal">0 ₽</p>
+      </article>
+      <article class="card card--balance">
+        <h2>Остаток</h2>
+        <p id="balanceTotal">0 ₽</p>
+      </article>
+    </section>
+
+    <section class="panel" aria-label="Добавить операцию">
+      <h2>Добавить операцию</h2>
+      <form id="operationForm" class="form">
+        <label>
+          Тип
+          <select id="type" required>
+            <option value="income">Доход</option>
+            <option value="expense">Трата</option>
+          </select>
+        </label>
+
+        <label>
+          Категория
+          <select id="category" required></select>
+        </label>
+
+        <label>
+          Сумма (₽)
+          <input id="amount" type="number" min="1" step="1" required placeholder="Например, 1500" />
+        </label>
+
+        <label>
+          Дата
+          <input id="date" type="date" required />
+        </label>
+
+        <label>
+          Комментарий
+          <input id="note" type="text" maxlength="80" placeholder="Необязательно" />
+        </label>
+
+        <button class="btn" type="submit">Сохранить</button>
+      </form>
+    </section>
+
+    <section class="panel" aria-label="История операций">
+      <div class="panel__top">
+        <h2>История</h2>
+        <label>
+          Месяц
+          <input id="monthFilter" type="month" />
+        </label>
+      </div>
+      <ul id="operationsList" class="operations"></ul>
+    </section>
+  </main>
+
+  <template id="operationTemplate">
+    <li class="operations__item">
+      <div>
+        <strong class="operations__title"></strong>
+        <p class="operations__meta"></p>
+      </div>
+      <div class="operations__side">
+        <span class="operations__amount"></span>
+        <button class="btn-link operations__delete" type="button">Удалить</button>
+      </div>
+    </li>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
