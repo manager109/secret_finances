@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+<title>Личные финансы</title>
+<link href="styles.css" rel="stylesheet"/>
+<meta content="dark" name="color-scheme"/>
+</head>
+<body>
+<div aria-hidden="true" class="bgGlow"></div>
+<header class="top">
+<div class="topInner">
+<div class="brand">
+<div aria-hidden="true" class="logo">₿</div>
+<div class="brandText">
+<div class="brandTitle">Личные финансы</div>
+<div class="brandSub">учёт расходов и доходов</div>
+</div>
+</div>
+<div class="userBar">
+<div class="userField">
+<label class="miniLabel" for="userSelect">Пользователь</label>
+<select class="control controlSmall" id="userSelect"></select>
+</div>
+<button class="btn btnGhost" id="btnNewUser" type="button">Новый</button>
+</div>
+</div>
+</header>
+<main class="wrap"><div class="tabs"><button class="tabBtn active" data-tab="tabTx" type="button">Операции</button><button class="tabBtn" data-tab="tabCats" type="button">Категории</button><button class="tabBtn" data-tab="tabGoals" type="button">Цели</button><button class="tabBtn" data-tab="tabFx" type="button">Конвертер</button></div>
+<section class="grid grid3" data-tab-content="tabTx">
+<div class="card">
+<div class="cardHeader">
+<div>
+<div class="cardTitle">Баланс</div>
+<div class="cardSub">по выбранному пользователю</div>
+</div>
+<span class="pill pillOk" id="pillState">—</span>
+</div>
+<div class="metric">
+<div class="metricValue" id="metricBalance">0 BYN</div>
+<div class="metricMeta" id="metricMeta">за месяц: доход 0 · расход 0</div>
+</div>
+<div class="miniGrid">
+<div class="miniStat">
+<div class="miniLabel">Наличные</div>
+<div class="miniValue" id="miniCash">0 BYN</div>
+</div>
+<div class="miniStat">
+<div class="miniLabel">Карта</div>
+<div class="miniValue" id="miniCard">0 BYN</div>
+</div>
+<div class="miniStat">
+<div class="miniLabel">В копилках</div>
+<div class="miniValue" id="miniGoals">0 BYN</div>
+</div>
+</div>
+</div>
+<div class="card span2">
+<div class="cardHeader">
+<div>
+<div class="cardTitle">Добавить операцию</div>
+<div class="cardSub">данные сохраняются в браузере</div>
+</div>
+<button class="btn btnGhost" id="btnQuickToday" type="button">Сегодня</button>
+</div>
+<form action="#" class="form" id="txForm" method="post">
+<div class="formRow">
+<label class="field">
+<span class="label">Тип</span>
+<select class="control" id="fType">
+<option>Расход</option>
+<option>Доход</option>
+</select>
+</label>
+<label class="field">
+<span class="label">Сумма</span>
+<input class="control" id="fAmount" inputmode="decimal" placeholder="например 12.50"/>
+</label>
+</div>
+<div class="formRow">
+<label class="field">
+<span class="label">Категория</span>
+<select class="control" id="fCategory">
+<option>Еда</option>
+<option>Транспорт</option>
+<option>Подписки</option>
+<option>Жильё</option>
+<option>Развлечения</option>
+<option>Здоровье</option>
+<option>Подарки</option>
+<option>Другое</option>
+</select>
+</label>
+<label class="field">
+<span class="label">Счёт</span>
+<select class="control" id="fAccount">
+<option>Наличные</option>
+<option>Карта</option>
+
+</select>
+</label>
+</div>
+<div class="formRow">
+<label class="field">
+<span class="label">Дата</span>
+<input class="control" id="fDate" type="date"/>
+</label>
+
+</div>
+<label class="field">
+<span class="label">Комментарий</span>
+<input class="control" id="fNote" placeholder="что это было"/>
+</label>
+<div class="formActions">
+<button class="btn btnGhost" type="reset">Очистить</button>
+<button class="btn btnPrimary" id="btnSave" type="button">Сохранить</button>
+</div>
+</form>
+</div>
+</section>
+<section class="grid grid1" data-tab-content="tabTx">
+<div class="card">
+<div class="cardHeader">
+<div>
+<div class="cardTitle">Операции</div>
+<div class="cardSub" id="txCount">—</div>
+</div>
+<div class="filters">
+<label class="field">
+<span class="label">Период</span>
+<select class="control controlSmall" id="periodSelect">
+<option value="month">Текущий месяц</option>
+<option value="all">Все</option>
+</select>
+</label>
+</div>
+</div>
+<div class="list" id="txList"></div>
+</div>
+</section>
+<section class="grid grid1 tabHidden" data-tab-content="tabCats"><div class="card">
+<div class="cardHeader">
+<div>
+<div class="cardTitle">Расходы по категориям</div>
+<div class="cardSub">сумма расходов за выбранный период</div>
+</div>
+<div class="filters">
+<label class="field">
+<span class="label">Период</span>
+<select class="control controlSmall" id="catsPeriodSelect">
+<option value="month">Текущий месяц</option>
+<option value="all">Все</option>
+</select>
+</label>
+</div>
+</div>
+<div class="list" id="catsList"></div>
+</div></section><section class="grid grid1 tabHidden" data-tab-content="tabGoals"><div class="card">
+<div class="cardHeader">
+<div>
+<div class="cardTitle">Копилки</div>
+<div class="cardSub">задай цель и откладывай деньги</div>
+</div>
+</div>
+<div class="form" style="margin-bottom:12px">
+<div class="formRow">
+<label class="field">
+<span class="label">Цель</span>
+<input class="control" id="gTitle" placeholder="например поездка"/>
+</label>
+<label class="field">
+<span class="label">Сумма цели</span>
+<input class="control" id="gTarget" inputmode="decimal" placeholder="например 1000"/>
+</label>
+</div>
+<div class="formActions" style="justify-content:flex-start">
+<button class="btn btnPrimary" id="btnAddGoal" type="button">Добавить цель</button>
+</div>
+</div>
+<div class="list" id="goalsList"></div>
+</div></section><section class="grid grid1 tabHidden" data-tab-content="tabFx"><div class="card">
+<div class="cardHeader">
+<div>
+<div class="cardTitle">Конвертер валют</div>
+<div class="cardSub">курс НБ РБ на выбранную дату</div>
+</div>
+</div>
+<div class="form">
+<div class="formRow">
+<label class="field">
+<span class="label">Дата</span>
+<input class="control" id="fxDate" type="date"/>
+</label>
+<label class="field">
+<span class="label">Сумма</span>
+<input class="control" id="fxAmount" inputmode="decimal" placeholder="например 600"/>
+</label>
+</div>
+<div class="formRow">
+<label class="field">
+<span class="label">Из</span>
+<select class="control" id="fxFrom">
+<option value="USD">USD</option>
+<option value="EUR">EUR</option>
+<option value="RUB">RUB</option>
+<option value="BYN">BYN</option>
+</select>
+</label>
+<label class="field">
+<span class="label">В</span>
+<select class="control" id="fxTo">
+<option value="RUB">RUB</option>
+<option value="USD">USD</option>
+<option value="EUR">EUR</option>
+<option value="BYN">BYN</option>
+</select>
+</label>
+</div>
+<div class="formActions" style="justify-content:flex-start">
+<button class="btn btnPrimary" id="btnFx" type="button">Посчитать</button>
+<button class="btn btnGhost" id="btnFxSwap" type="button">Поменять</button>
+</div>
+<div class="note" id="fxResult">—</div>
+</div>
+</div></section><footer class="foot">
+<div class="mutedSmall">© Личные финансы</div>
+</footer>
+</main>
+<script src="app.js"></script>
+
+<!-- Auth Overlay -->
+<div class="authOverlay" id="authOverlay" role="dialog" aria-modal="true" aria-label="Вход в профиль">
+  <div class="authCard">
+    <div class="authTitle">Выбор профиля</div>
+    <div class="authSub" id="authHint">Выбери профиль и введи пароль</div>
+
+    <div class="field">
+      <label class="miniLabel" for="authUserSelect">Профиль</label>
+      <select class="control" id="authUserSelect"></select>
+    </div>
+
+    <div class="authBlock" id="authLoginBlock">
+      <div class="field">
+        <label class="miniLabel" for="authPassword">Пароль</label>
+        <input class="control" id="authPassword" type="password" autocomplete="current-password" placeholder="Пароль"/>
+      </div>
+      <div class="row rowTight">
+        <button class="btn" id="btnAuthLogin" type="button">Войти</button>
+        <button class="btn btnGhost" id="btnAuthCancel" type="button">Отмена</button>
+      </div>
+    </div>
+
+    <div class="authBlock authHidden" id="authSetPwBlock">
+      <div class="field">
+        <label class="miniLabel" for="authPw1">Новый пароль</label>
+        <input class="control" id="authPw1" type="password" autocomplete="new-password" placeholder="Новый пароль"/>
+      </div>
+      <div class="field">
+        <label class="miniLabel" for="authPw2">Повтори пароль</label>
+        <input class="control" id="authPw2" type="password" autocomplete="new-password" placeholder="Повтори пароль"/>
+      </div>
+      <div class="row rowTight">
+        <button class="btn" id="btnAuthSetPw" type="button">Сохранить и войти</button>
+        <button class="btn btnGhost" id="btnAuthCancel2" type="button">Отмена</button>
+      </div>
+    </div>
+
+    <hr class="sep"/>
+
+    <div class="authTitle2">Новый профиль</div>
+    <div class="field">
+      <label class="miniLabel" for="newUserName">Имя</label>
+      <input class="control" id="newUserName" type="text" autocomplete="nickname" placeholder="Например: Алекс"/>
+    </div>
+    <div class="field">
+      <label class="miniLabel" for="newUserPw1">Пароль</label>
+      <input class="control" id="newUserPw1" type="password" autocomplete="new-password" placeholder="Пароль"/>
+    </div>
+    <div class="field">
+      <label class="miniLabel" for="newUserPw2">Повтори пароль</label>
+      <input class="control" id="newUserPw2" type="password" autocomplete="new-password" placeholder="Повтори пароль"/>
+    </div>
+    <button class="btn btnWide" id="btnAuthCreate" type="button">Создать профиль</button>
+
+    <div class="authError" id="authError" aria-live="polite"></div>
+  </div>
+</div>
+
+</body>
+</html>
